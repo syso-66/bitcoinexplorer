@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bw.bitcoin.dao.BlocksMapper">
+  <resultMap id="BaseResultMap" type="com.bw.bitcoin.po.Blocks">
+    <id column="bid" jdbcType="INTEGER" property="bid" />
+    <result column="height" jdbcType="INTEGER" property="height" />
+    <result column="blockhash" jdbcType="VARCHAR" property="blockhash" />
+    <result column="time" jdbcType="DATE" property="time" />
+    <result column="miner" jdbcType="VARCHAR" property="miner" />
+    <result column="size" jdbcType="INTEGER" property="size" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    bid, height, blockhash, time, miner, size
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from blocks
+    where bid = #{bid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from blocks
+    where bid = #{bid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.bw.bitcoin.po.Blocks">
+    insert into blocks (bid, height, blockhash, 
+      time, miner, size)
+    values (#{bid,jdbcType=INTEGER}, #{height,jdbcType=INTEGER}, #{blockhash,jdbcType=VARCHAR}, 
+      #{time,jdbcType=DATE}, #{miner,jdbcType=VARCHAR}, #{size,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bw.bitcoin.po.Blocks">
+    insert into blocks
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="bid != null">
+        bid,
+      </if>
+      <if test="height != null">
+        height,
+      </if>
+      <if test="blockhash != null">
+        blockhash,
+      </if>
+      <if test="time != null">
+        time,
+      </if>
+      <if test="miner != null">
+        miner,
+      </if>
+      <if test="size != null">
+        size,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="bid != null">
+        #{bid,jdbcType=INTEGER},
+      </if>
+      <if test="height != null">
+        #{height,jdbcType=INTEGER},
+      </if>
+      <if test="blockhash != null">
+        #{blockhash,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=DATE},
+      </if>
+      <if test="miner != null">
+        #{miner,jdbcType=VARCHAR},
+      </if>
+      <if test="size != null">
+        #{size,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bw.bitcoin.po.Blocks">
+    update blocks
+    <set>
+      <if test="height != null">
+        height = #{height,jdbcType=INTEGER},
+      </if>
+      <if test="blockhash != null">
+        blockhash = #{blockhash,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null">
+        time = #{time,jdbcType=DATE},
+      </if>
+      <if test="miner != null">
+        miner = #{miner,jdbcType=VARCHAR},
+      </if>
+      <if test="size != null">
+        size = #{size,jdbcType=INTEGER},
+      </if>
+    </set>
+    where bid = #{bid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bw.bitcoin.po.Blocks">
+    update blocks
+    set height = #{height,jdbcType=INTEGER},
+      blockhash = #{blockhash,jdbcType=VARCHAR},
+      time = #{time,jdbcType=DATE},
+      miner = #{miner,jdbcType=VARCHAR},
+      size = #{size,jdbcType=INTEGER}
+    where bid = #{bid,jdbcType=INTEGER}
+  </update>
+  <select id="toBlocks" parameterType="com.bw.bitcoin.po.Blocks.java">
+    select
+    <include refid="Base_Column_List" />
+    from blocks
+  </select>
+</mapper>
